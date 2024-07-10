@@ -58,6 +58,11 @@ function App() {
     return null;
   };
 
+  //Validar si hay empate (Si ya se ocuparon todas las posiciones y no hay ganador)
+  const checkEndGame = (newBoard) => {
+    return newBoard.every((square) => square !== null)
+  }
+
   //Reiniciar juego
   const resetGame = () => {
     setBoard(Array(9).fill(null))
@@ -83,6 +88,8 @@ function App() {
     const newWinner = checkWinner(newBoard);
     if (newWinner) {
       setWinnner(newWinner);
+    }else if (checkEndGame(newBoard)) {
+      setWinnner(false) //empate
     }
   };
 

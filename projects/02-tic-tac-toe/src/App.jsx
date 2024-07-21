@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Square } from "./components/Square.jsx"
-import { TURNS, WINNER_COMBOS} from "./constants.js"
+import { Square } from "./components/Square.jsx";
+import { TURNS } from "./constants.js";
+import { checkWinner, checkEndGame } from "./logic/board.js";
 
 function App() {
   //Definicion del tablero con 9 posiciones y rellenar en null
@@ -13,35 +14,15 @@ function App() {
   //null no hay ganador, false empate
   const [winner, setWinnner] = useState(null);
 
-  //Validar ganador
-  const checkWinner = (boardToCheck) => {
-    for (const combo of WINNER_COMBOS) {
-      const [a, b, c] = combo;
-      if (
-        boardToCheck[a] &&
-        boardToCheck[a] === boardToCheck[b] &&
-        boardToCheck[a] === boardToCheck[c]
-      ) {
-        return boardToCheck[a];
-      }
-    }
-    return null;
-  };
-
-  //Validar si hay empate (Si ya se ocuparon todas las posiciones y no hay ganador)
-  const checkEndGame = (newBoard) => {
-    return newBoard.every((square) => square !== null)
-  }
-
   //Reiniciar juego
   const resetGame = () => {
-    setBoard(Array(9).fill(null))
-    setTurn(TURNS.X)
-    setWinnner(null)
-  }
+    setBoard(Array(9).fill(null));
+    setTurn(TURNS.X);
+    setWinnner(null);
+  };
 
   //Actualizacion del tablero
-  const updateBoard = (index) => {
+   const updateBoard = (index) => {
     //Evitar actualizacion de tablero si ya esta marcado
     if (board[index]) return;
 
@@ -58,8 +39,8 @@ function App() {
     const newWinner = checkWinner(newBoard);
     if (newWinner) {
       setWinnner(newWinner);
-    }else if (checkEndGame(newBoard)) {
-      setWinnner(false) //empate
+    } else if (checkEndGame(newBoard)) {
+      setWinnner(false); //empate
     }
   };
 

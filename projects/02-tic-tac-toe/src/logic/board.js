@@ -1,4 +1,5 @@
 import { WINNER_COMBOS} from "../constants.js"
+import { TURNS } from "../constants.js";
 
 //Logica de juego
 
@@ -21,3 +22,6 @@ export const checkWinner = (boardToCheck) => {
 export const checkEndGame = (newBoard) => {
   return newBoard.every((square) => square !== null);
 };
+
+//Cambio de turno
+export const newTurn = (turn) => { return turn === TURNS.X ? TURNS.O : TURNS.X; }

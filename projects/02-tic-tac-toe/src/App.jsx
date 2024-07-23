@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Square } from "./components/Square.jsx";
+import { WinnerModal } from "./components/WinnerModal.jsx";
+import { GameBoard } from "./components/GameBoard.jsx";
 import { TURNS } from "./constants.js";
-import { checkWinner, checkEndGame } from "./logic/board.js";
+import { checkWinner, checkEndGame, newTurn } from "./logic/board.js";
+import { Turn } from "./components/Turn.jsx";
 
 function App() {
   //Definicion del tablero con 9 posiciones y rellenar en null
@@ -22,7 +24,7 @@ function App() {
   };
 
   //Actualizacion del tablero
-   const updateBoard = (index) => {
+  const updateBoard = (index) => {
     //Evitar actualizacion de tablero si ya esta marcado
     if (board[index]) return;
 
@@ -32,8 +34,7 @@ function App() {
     setBoard(newBoard);
 
     //Cambio de turno
-    const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
-    setTurn(newTurn);
+    setTurn(newTurn(turn));
 
     //Revisar si hay ganador
     const newWinner = checkWinner(newBoard);
@@ -48,37 +49,12 @@ function App() {
     <main className="board">
       <h1>Tic Tac Toe</h1>
       <button onClick={resetGame}>Reiniciar</button>
-      <section className="game">
-        {
-          //Mapeo del tablero en el html, creacion de un cuadro (Square) por cada espacio en el tablero
-          board.map((_, index) => {
-            return (
-              <Square key={index} index={index} updateBoard={updateBoard}>
-                {board[index]}
-              </Square>
-            );
-          })
-        }
-      </section>
 
-      <section className="turn">
-        <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
-        <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
-      </section>
+      <GameBoard board={board} updateBoard={updateBoard} />
 
-      {winner !== null && (
-        <section className="winner">
-          <div className="text">
-            <h2>{winner === false ? "Empate" : "Ganó:"}</h2>
-            <header className="win">
-              {winner && <Square>{winner}</Square>}
-            </header>
-            <footer>
-              <button onClick={resetGame}>Empezar de nuevo</button>
-            </footer>
-          </div>
-        </section>
-      )}
+      <Turn turn={turn} />
+
+      <WinnerModal winner={winner} resetGame={resetGame} />
     </main>
   );
 }

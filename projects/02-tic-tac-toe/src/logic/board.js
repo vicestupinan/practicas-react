@@ -1,27 +1,26 @@
-import { WINNER_COMBOS} from "../constants.js"
-import { TURNS } from "../constants.js";
+import { WINNER_COMBOS, TURNS } from '../constants.js'
 
-//Logica de juego
+// Logica de juego
 
-//Validar ganador
+// Validar ganador
 export const checkWinner = (boardToCheck) => {
   for (const combo of WINNER_COMBOS) {
-    const [a, b, c] = combo;
+    const [a, b, c] = combo
     if (
       boardToCheck[a] &&
       boardToCheck[a] === boardToCheck[b] &&
       boardToCheck[a] === boardToCheck[c]
     ) {
-      return boardToCheck[a];
+      return boardToCheck[a]
     }
   }
-  return null;
-};
+  return null
+}
 
-//Validar si hay empate (Si ya se ocuparon todas las posiciones y no hay ganador)
+// Validar si hay empate (Si ya se ocuparon todas las posiciones y no hay ganador)
 export const checkEndGame = (newBoard) => {
-  return newBoard.every((square) => square !== null);
-};
+  return newBoard.every((square) => square !== null)
+}
 
-//Cambio de turno
-export const newTurn = (turn) => { return turn === TURNS.X ? TURNS.O : TURNS.X; }
+// Cambio de turno
+export const newTurn = (turn) => { return turn === TURNS.X ? TURNS.O : TURNS.X }

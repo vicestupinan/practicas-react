@@ -7,6 +7,7 @@ import { Turn } from './components/Turn.jsx'
 
 function App () {
   // Definicion del tablero con 9 posiciones y rellenar en null
+
   const [board, setBoard] = useState(() => {
     const boardFromStorage = window.localStorage.getItem('board')
     return boardFromStorage

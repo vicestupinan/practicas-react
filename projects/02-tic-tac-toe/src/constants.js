@@ -1,7 +1,7 @@
 //Definicion de turnos
 export const TURNS = {
-  X: '❌',
-  O: '⚪'
+  X: '✕',
+  O: '○'
 };
 
 //Definicion de combinaciones ganadoras

@@ -63,7 +63,7 @@ function App() {
   //Ejemplo useEffect
   //Recibe dos parametros, codigo a ejecutar y dependencias
   //Las dependencias definen cuando se va a ejecutar el useEffect, si no se envian las dependencias se ejecutara cada vez que se renderice el componente
-  useEffect(()=>{
+  useEffect(() => {
     //Siempre se ejecutar como minimo una vez
     console.log('Ejecucion useEffect')
   }, [winner]) //El useEffect se ejecutara nuevamente cada vez que el valor de winner cambie

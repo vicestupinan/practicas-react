@@ -7,10 +7,16 @@ import { Turn } from "./components/Turn.jsx";
 
 function App() {
   //Definicion del tablero con 9 posiciones y rellenar en null
-  const [board, setBoard] = useState(Array(9).fill(null));
+  const [board, setBoard] = useState(() => {
+    const boardFromStorage = window.localStorage.getItem('board')
+    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null);
+  })
 
   //Definicion de estado para los turnos, turno inicial y cambio de turno
-  const [turn, setTurn] = useState(TURNS.X);
+  const [turn, setTurn] = useState(() => {
+    const turnFromStorage = window.localStorage.getItem('turn');
+    return turnFromStorage ?? TURNS.X;
+  });
 
   //Definicion de estado para establecer ganador
   //null no hay ganador, false empate
@@ -21,6 +27,9 @@ function App() {
     setBoard(Array(9).fill(null));
     setTurn(TURNS.X);
     setWinnner(null);
+
+    window.localStorage.removeItem('board')
+    window.localStorage.removeItem('turn')
   };
 
   //Actualizacion del tablero
@@ -31,10 +40,14 @@ function App() {
     //Actualizar tablero despues de cada jugada
     const newBoard = [...board];
     newBoard[index] = turn;
-    setBoard(newBoard);
+    setBoard(newBoard);w
 
     //Cambio de turno
     setTurn(newTurn(turn));
+
+    //Guardar partida
+    window.localStorage.setItem('board', JSON.stringify(newBoard))
+    window.localStorage.setItem('turn', newTurn(turn))
 
     //Revisar si hay ganador
     const newWinner = checkWinner(newBoard);

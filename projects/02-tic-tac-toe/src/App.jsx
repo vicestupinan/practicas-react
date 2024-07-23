@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { WinnerModal } from "./components/WinnerModal.jsx"
 import { GameBoard } from "./components/GameBoard.jsx"
 import { TURNS } from "./constants.js"
@@ -60,9 +60,18 @@ function App() {
     }
   }
 
+  //Ejemplo useEffect
+  //Recibe dos parametros, codigo a ejecutar y dependencias
+  //Las dependencias definen cuando se va a ejecutar el useEffect, si no se envian las dependencias se ejecutara cada vez que se renderice el componente
+  useEffect(()=>{
+    //Siempre se ejecutar como minimo una vez
+    console.log('Ejecucion useEffect')
+  }, [winner]) //El useEffect se ejecutara nuevamente cada vez que el valor de winner cambie
+
   return (
     <main className="board">
       <h1>Tic Tac Toe</h1>
+
       <button onClick={resetGame}>Reiniciar</button>
 
       <GameBoard board={board} updateBoard={updateBoard} />

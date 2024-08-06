@@ -2,23 +2,11 @@ import { Header } from '../components/Header'
 import { Products } from '../components/Products'
 // import { products as initialProducts } from '../mocks/products.json'
 import { useState, useEffect } from 'react'
-
-function useFilters () {
-  const [filters, setFilters] = useState({ category: 'all', minPrice: 0 })
-  const filterProducts = (products) => {
-    return products.filter(product => {
-      return (
-        product.price >= filters.minPrice &&
-        (filters.category === 'all' || product.category.name === filters.category)
-      )
-    })
-  }
-  return { filterProducts, setFilters }
-}
+import { useFilters } from '../hooks/useFilters'
 
 function App () {
   const [products, setProducts] = useState([])
-  const { filterProducts, setFilters } = useFilters()
+  const { filterProducts } = useFilters()
 
   const getProducts = () => {
     fetch('https://api.escuelajs.co/api/v1/products')
@@ -32,7 +20,7 @@ function App () {
 
   return (
     <>
-      <Header changeFilters={setFilters} />
+      <Header />
       <Products products={filteredProducts} />
     </>
   )
